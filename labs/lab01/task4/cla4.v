@@ -1,6 +1,4 @@
 // cla4.v
-// (Carried forward from Task 3 -- paste in your completed, delay-annotated
-// version.)
 // Gate-level 4-bit carry-lookahead adder, matching the lecture circuit.
 // Every gate needs an explicit delay (constant is fine here, e.g. #(2)) --
 // this is the default from Task 2 onward, not a special step.
@@ -21,19 +19,28 @@
 // TODO -- Step 3: sum bits
 //   sum[i] = p[i] ^ c[i]     (c0 = cin)
 
-module cla4(
-  input  [3:0] a,
-  input  [3:0] b,
-  input        cin,
-  output [3:0] sum,
-  output       cout
+// cla64_flat.v
+// cla4.v
+module cla4 (
+    input  [3:0] a,
+    input  [3:0] b,
+    input        cin,
+    output [3:0] sum,
+    output       cout
 );
 
-  wire p0, p1, p2, p3;
-  wire g0, g1, g2, g3;
-  wire c1, c2, c3;
+    wire [3:0] p, g;
+    wire [4:1] c;
 
-  // TODO: your gate-level P/G, carry, and sum logic goes here.
-  // (cout should be connected to c4.) Remember the delay on every gate.
+    assign p = a ^ b;
+    assign g = a & b;
+
+    assign #(2) c[1] = g[0] | (p[0] & cin);
+    assign #(2) c[2] = g[1] | (p[1] & g[0]) | (p[1] & p[0] & cin);
+    assign #(2) c[3] = g[2] | (p[2] & g[1]) | (p[2] & p[1] & g[0]) | (p[2] & p[1] & p[0] & cin);
+    assign #(2) c[4] = g[3] | (p[3] & g[2]) | (p[3] & p[2] & g[1]) | (p[3] & p[2] & p[1] & g[0]) | (p[3] & p[2] & p[1] & p[0] & cin);
+
+    assign cout = c[4];
+    assign #(2) sum = p ^ {c[3:1], cin};
 
 endmodule
