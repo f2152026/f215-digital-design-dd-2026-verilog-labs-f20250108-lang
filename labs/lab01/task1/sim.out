@@ -1,0 +1,41 @@
+#! /usr/bin/vvp
+:ivl_version "11.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/system.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2009.vpi";
+S_0x6360a0e2edc0 .scope package, "$unit" "$unit" 2 1;
+ .timescale 0 0;
+S_0x6360a0e2ef50 .scope module, "FA_Gate" "FA_Gate" 3 10;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /INPUT 1 "cin";
+    .port_info 3 /OUTPUT 1 "sum";
+    .port_info 4 /OUTPUT 1 "cout";
+o0x72f9e68ce018 .functor BUFZ 1, C4<z>; HiZ drive
+o0x72f9e68ce048 .functor BUFZ 1, C4<z>; HiZ drive
+L_0x6360a0e77e70 .functor XOR 1, o0x72f9e68ce018, o0x72f9e68ce048, C4<0>, C4<0>;
+L_0x6360a0e77f60 .functor AND 1, o0x72f9e68ce018, o0x72f9e68ce048, C4<1>, C4<1>;
+o0x72f9e68ce078 .functor BUFZ 1, C4<z>; HiZ drive
+L_0x6360a0e780a0 .functor XOR 1, o0x72f9e68ce078, L_0x6360a0e77e70, C4<0>, C4<0>;
+L_0x6360a0e78160 .functor AND 1, o0x72f9e68ce078, L_0x6360a0e77e70, C4<1>, C4<1>;
+L_0x6360a0e78250 .functor OR 1, L_0x6360a0e77f60, L_0x6360a0e78160, C4<0>, C4<0>;
+v0x6360a0e2f0e0_0 .net "a", 0 0, o0x72f9e68ce018;  0 drivers
+v0x6360a0e77830_0 .net "b", 0 0, o0x72f9e68ce048;  0 drivers
+v0x6360a0e778f0_0 .net "cin", 0 0, o0x72f9e68ce078;  0 drivers
+v0x6360a0e779c0_0 .net "cout", 0 0, L_0x6360a0e78250;  1 drivers
+v0x6360a0e77a80_0 .net "pc1", 0 0, L_0x6360a0e77f60;  1 drivers
+v0x6360a0e77b90_0 .net "pc2", 0 0, L_0x6360a0e78160;  1 drivers
+v0x6360a0e77c50_0 .net "ps", 0 0, L_0x6360a0e77e70;  1 drivers
+v0x6360a0e77d10_0 .net "sum", 0 0, L_0x6360a0e780a0;  1 drivers
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "-";
+    "FA_Gate.v";
